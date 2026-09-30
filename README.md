@@ -38,8 +38,8 @@ The API communicates with Proxmox for infrastructure information and uses SSH to
 For game-server operations, the API delegates management to the configured game-server manager rather than implementing game-specific behavior itself.
 
 ### C4 Diagrams
-- [C4 Context Diagram](docs\architecture\c4-level1-system-context.png)
-- [C4 Container Diagram](docs\architecture\c4-level2-container.png)
+- [C4 Context Diagram](docs/architecture/c4-level1-system-context.png)
+- [C4 Container Diagram](docs/architecture/c4-level2-container.png)
 
 ## Technologies
 
@@ -55,16 +55,16 @@ For game-server operations, the API delegates management to the configured game-
 
 ## Requirements
 
---
+-- TBD
 
 ## Configuration
 
 The full list of environment variables, descriptions, and examples can be found here:
-- [configuration-reference](docs\configuration-reference.html)
+- [configuration-reference](docs/configuration-reference.html)
 
 ## Installation
 
---
+-- TBD
 
 ## Usage
 
