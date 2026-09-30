@@ -56,6 +56,7 @@ For game-server operations, the API delegates management to the configured game-
 ## Requirements
 
 -- TBD
+- Intended for Linux, tested on Debian 13
 
 ## Configuration
 
@@ -67,6 +68,8 @@ The full list of environment variables, descriptions, and examples can be found 
 -- TBD
 
 ## Usage
+The API can be started by running the Orcha executable
+
 
 [Basic startup instructions and example API requests.]
 
