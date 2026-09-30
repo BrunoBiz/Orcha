@@ -109,4 +109,4 @@ The current version targets Proxmox LXC environments and supports game-server ma
 
 ## License
 
---
+MIT
