@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title></title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>The configuration file has to be named pm.env and needs to be placed in the API's installation directory</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Required</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PVE_URL</td>
+<td>Yes</td>
+<td>The base Proxmox VE API URL structure - https://<your-server-ip-or-domain>:8006/api2/json/</td>
+<td><a href="https://192.168.18.999:8006/api2/json">https://192.168.18.999:8006/api2/json</a></td>
+</tr>
+<tr>
+<td>PVE_USER</td>
+<td>Yes</td>
+<td>The name of the Proxmox user responsible for the API communication</td>
+<td>Orcha</td>
+</tr>
+<tr>
+<td>PVE_REALM</td>
+<td>Yes</td>
+<td>The user's realm (PVE)</td>
+<td>PVE</td>
+</tr>
+<tr>
+<td>PVE_USER_REALM</td>
+<td>Yes</td>
+<td>User + Realm -&gt; PVE_USER@PVE_REALM</td>
+<td>Orcha@PVE</td>
+</tr>
+<tr>
+<td>PVE_TOKEN_ID</td>
+<td>Yes</td>
+<td>Proxmox VE API Token ID</td>
+<td>api-token</td>
+</tr>
+<tr>
+<td>PVE_TOKEN</td>
+<td>Yes</td>
+<td>Proxmox VE API Token</td>
+<td>aaa99aaa-a9a9-99aa-aaa9-a99999a999a9</td>
+</tr>
+<tr>
+<td>PVE_NODE_NAME</td>
+<td>Yes</td>
+<td>The name of the node which will be accessed by Orcha</td>
+<td>main</td>
+</tr>
+<tr>
+<td>SSH_KEY_FILE</td>
+<td>Yes</td>
+<td>Path to the SSH Key, in the machine running Orcha, that will be used to access the Proxmox Server</td>
+<td>&quot;/home/apiuser/.ssh/apiKey&quot;</td>
+</tr>
+<tr>
+<td>SSH_KEY_PASSPHRASE</td>
+<td>Yes</td>
+<td>The SSH Key passphrase</td>
+<td>999aaa</td>
+</tr>
+<tr>
+<td>SSH_PVE_IP</td>
+<td>Yes</td>
+<td>The main Proxmox IP address</td>
+<td>192.168.18.999</td>
+</tr>
+<tr>
+<td>SSH_PVE_PORT</td>
+<td>Yes</td>
+<td>The main Proxmox SSH port</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<p>Example:<br>
+PVE_URL=<a href="https://192.168.18.999:8006/api2/json%5C">https://192.168.18.999:8006/api2/json\</a>
+PVE_USER=Orcha<br>
+PVE_REALM=pve<br>
+PVE_USER_REALM=Orcha@pve<br>
+PVE_TOKEN_ID=api-token<br>
+PVE_TOKEN=aaa99aaa-a9a9-99aa-aaa9-a99999a999a9<br>
+PVE_NODE_NAME=main<br>
+SSH_KEY_FILE=&quot;/home/apiuser/.ssh/apiKey&quot;<br>
+SSH_KEY_PASSPHRASE=999aaa<br>
+SSH_PVE_IP=192.168.18.999<br>
+SSH_PVE_PORT=22\</p>
+
+            
+            
+        </body>
+        </html>

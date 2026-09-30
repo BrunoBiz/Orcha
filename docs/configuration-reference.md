@@ -1,3 +1,5 @@
+The configuration file has to be named pm.env and needs to be placed in the API's installation directory
+
 | Variable           | Required | Description                                                                                       | Example                               |
 |--------------------|----------|---------------------------------------------------------------------------------------------------|---------------------------------------|
 | PVE_URL            | Yes      | The base Proxmox VE API URL structure - https://<your-server-ip-or-domain>:8006/api2/json/        | https://192.168.18.999:8006/api2/json |
@@ -11,3 +13,17 @@
 | SSH_KEY_PASSPHRASE | Yes      | The SSH Key passphrase                                                                            | 999aaa                                |
 | SSH_PVE_IP         | Yes      | The main Proxmox IP address                                                                       | 192.168.18.999                        |
 | SSH_PVE_PORT       | Yes      | The main Proxmox SSH port                                                                         | 22                                    |
+
+
+Example:\
+PVE_URL=https://192.168.18.999:8006/api2/json\
+PVE_USER=Orcha\
+PVE_REALM=pve\
+PVE_USER_REALM=Orcha@pve\
+PVE_TOKEN_ID=api-token\
+PVE_TOKEN=aaa99aaa-a9a9-99aa-aaa9-a99999a999a9\
+PVE_NODE_NAME=main\
+SSH_KEY_FILE="/home/apiuser/.ssh/apiKey"\
+SSH_KEY_PASSPHRASE=999aaa\
+SSH_PVE_IP=192.168.18.999\
+SSH_PVE_PORT=22\
