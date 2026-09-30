@@ -61,7 +61,7 @@ For game-server operations, the API delegates management to the configured game-
 ## Configuration
 
 The full list of environment variables, descriptions, and examples can be found here:
-- [configuration-reference](docs/configuration-reference.html)
+- [configuration-reference](docs/configuration-reference.md)
 
 ## Installation
 
