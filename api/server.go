@@ -166,11 +166,17 @@ func openApiSpecs(api huma.API) {
 		URL:   "https://github.com/BrunoBiz",
 	}
 
+	var license = huma.License{
+		Name:       "MIT License",
+		Identifier: "MIT",
+	}
+
 	var info = huma.Info{
 		Title:       "Orcha - Proxmox Orchestration API",
 		Description: "A RESTful API that provides access to Proxmox environment information and enables administrators to manage the lifecycle of game servers running inside Proxmox LXC containers.",
 		Contact:     &contact,
 		Version:     "1.0.0",
+		License:     &license,
 	}
 	api.OpenAPI().Info = &info
 
