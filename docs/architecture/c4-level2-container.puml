@@ -2,7 +2,7 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 LAYOUT_WITH_LEGEND()
 'Ald+D to preview
-title C2 - Container diagram for Orcha
+title Container diagram for Orcha
 
 Person(serverAdm, "Proxmox Server Administrator", "A Proxmox server administrator who manages multiple containers and/or game servers.")
 

@@ -3,7 +3,7 @@
 'Ald+D to preview
 LAYOUT_WITH_LEGEND()
 
-title C1 - System Context diagram for Orcha
+title System Context diagram for Orcha
 
 Person(serverAdm, "Proxmox Server Administrator", "A Proxmox server administrator who manages multiple containers and/or game servers.")
 System(proxmox_system, "Orcha - Proxmox Orchestration System", "Provides server administrators with an API to monitor a Proxmox environment and manage game servers running within its containers.")
