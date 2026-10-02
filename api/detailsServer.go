@@ -21,7 +21,7 @@ func (server *Server) postDetailsServer(c context.Context, input *ServerRequest)
 
 	// Parameter sent via URL
 	cntID = input.CntID
-	slog.Log(c, logger.LevelFile, "[postStartServer] - cntID: "+strconv.FormatUint(cntID, 10))
+	slog.Log(c, logger.LevelFile, "[postDetailsServer] - cntID: "+strconv.FormatUint(cntID, 10))
 
 	// Prepares the command to check server details
 	commandDetails := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal details'"`,

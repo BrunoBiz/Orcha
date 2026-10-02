@@ -42,7 +42,7 @@ func (server *Server) getContainers(c context.Context, input *struct{}) (*Contai
 	return &containerOutput, err
 }
 
-func (server *Server) getContainerById(c context.Context, input *ConteinerInput) (*ContainerOutput, error) {
+func (server *Server) getContainerById(c context.Context, input *ContainerInput) (*ContainerOutput, error) {
 	slog.Log(c, logger.LevelFile, "[getContainerById] - API CALL")
 
 	var cntID uint64
@@ -85,7 +85,7 @@ func (server *Server) getContainerById(c context.Context, input *ConteinerInput)
 	return &containerOutput, nil
 }
 
-func (server *Server) getContainerStatusById(c context.Context, input *ConteinerInput) (*ServerResponse, error) {
+func (server *Server) getContainerStatusById(c context.Context, input *ContainerInput) (*ServerResponse, error) {
 	slog.Log(c, logger.LevelFile, "[getContainerStatusById] - API CALL")
 
 	var cntID uint64

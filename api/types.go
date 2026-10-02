@@ -57,6 +57,6 @@ type Server struct {
 	humaAPI   huma.API
 }
 
-type ConteinerInput struct {
+type ContainerInput struct {
 	CntID uint64 `path:"id" maxLength:"5" example:"101" doc:"Container VMID"`
 }

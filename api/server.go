@@ -66,7 +66,7 @@ func (server *Server) setupRouter() {
 	// Sets up routing
 	// Uses the Proxmox API
 	huma.Register(humaApi, huma.Operation{ // Returns info about all containers
-		OperationID: "get-containers",
+		OperationID: "getContainers",
 		Method:      http.MethodGet,
 		Path:        "/containers",
 		Summary:     "Retrieve all containers",
@@ -75,16 +75,16 @@ func (server *Server) setupRouter() {
 	}, server.getContainers)
 
 	huma.Register(humaApi, huma.Operation{ // Returns info about a specific container
-		OperationID: "get-containersById",
+		OperationID: "getContainerById",
 		Method:      http.MethodGet,
 		Path:        "/containers/{id}",
 		Summary:     "Retrieve container via id",
-		Description: "Returns information about a specific container, if found, via it's vmid.",
+		Description: "Returns information about a specific container, if found, via its VMID.",
 		Tags:        tagContainers,
 	}, server.getContainerById)
 
 	huma.Register(humaApi, huma.Operation{ // Returns if a specific container is running
-		OperationID: "get-containerStatusById",
+		OperationID: "getContainerStatusById",
 		Method:      http.MethodGet,
 		Path:        "/containers/{id}/status",
 		Summary:     "Check if container is running",
@@ -94,7 +94,7 @@ func (server *Server) setupRouter() {
 
 	// Uses SSH to connect to a container and run the commands
 	huma.Register(humaApi, huma.Operation{ // Start server
-		OperationID: "post-startServer",
+		OperationID: "startServer",
 		Method:      http.MethodPost,
 		Path:        "/containers/server/{id}/start",
 		Summary:     "Start server",
@@ -103,7 +103,7 @@ func (server *Server) setupRouter() {
 	}, server.postStartServer)
 
 	huma.Register(humaApi, huma.Operation{ // Server status -> Online/Offline
-		OperationID: "post-detailsServer",
+		OperationID: "detailsServer",
 		Method:      http.MethodPost,
 		Path:        "/containers/server/{id}/details",
 		Summary:     "Check server status",
@@ -112,7 +112,7 @@ func (server *Server) setupRouter() {
 	}, server.postDetailsServer)
 
 	huma.Register(humaApi, huma.Operation{ // Stop server
-		OperationID: "post-stopServer",
+		OperationID: "stopServer",
 		Method:      http.MethodPost,
 		Path:        "/containers/server/{id}/stop",
 		Summary:     "Stop server",
@@ -121,7 +121,7 @@ func (server *Server) setupRouter() {
 	}, server.postStopServer)
 
 	huma.Register(humaApi, huma.Operation{ // Restart server
-		OperationID: "post-restartServer",
+		OperationID: "restartServer",
 		Method:      http.MethodPost,
 		Path:        "/containers/server/{id}/restart",
 		Summary:     "Restart server",
@@ -183,7 +183,7 @@ func openApiSpecs(api huma.API) {
 
 	var servers = huma.Server{
 		URL:         "http://localhost:8090",
-		Description: "Local Proxmox container IP",
+		Description: "Local Orcha API",
 	}
 	api.OpenAPI().Servers = append(api.OpenAPI().Servers, &servers)
 

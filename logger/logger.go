@@ -94,7 +94,15 @@ func checkDirectory() error {
 
 func logRotation() error {
 	// Will delete any log file older than 15 days
-	cmd := exec.Command(`/bin/bash`, `-c`, `'find ./Log -type f -mtime +15 -exec rm {} ;'`)
+	cmd := exec.Command(
+		"find",
+		"./Log",
+		"-type",
+		"f",
+		"-mtime",
+		"+15",
+		"-delete",
+	)
 	deleteOldLogs, err := cmd.CombinedOutput()
 
 	slog.Debug("logRotation()")
