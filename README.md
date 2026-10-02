@@ -68,16 +68,18 @@ The full list of environment variables, descriptions, and examples can be found 
 -- TBD
 
 ## Usage
-The API can be started by running the Orcha executable, below are a few examples of the API requests:
 
-### Check a containers' status
-`/containers/{id}/status`
+GET  /containers\
+GET  /containers/{id}\
+GET  /containers/{id}/status\
 
-### Retrieve all containers
-`/containers`
 
-### Start a game server
-`/containers/server/{id}/start`
+
+POST /containers/server/{id}/start\
+POST /containers/server/{id}/stop\
+POST /containers/server/{id}/restart\
+POST /containers/server/{id}/details\
+
 
 ## API Documentation
 
