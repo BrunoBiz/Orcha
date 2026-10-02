@@ -85,17 +85,27 @@ The full list of environment variables, descriptions, and examples can be found 
 
 ## Usage
 
-GET  /containers\
-GET  /containers/{id}\
-GET  /containers/{id}/status\
+Orcha exposes the following API operations:
 
+```text
+GET  /containers
+GET  /containers/{id}
+GET  /containers/{id}/status
 
+POST /containers/server/{id}/start
+POST /containers/server/{id}/stop
+POST /containers/server/{id}/restart
+POST /containers/server/{id}/details
+```
 
-POST /containers/server/{id}/start\
-POST /containers/server/{id}/stop\
-POST /containers/server/{id}/restart\
-POST /containers/server/{id}/details\
+`{id}` represents the Proxmox VMID of the target LXC container.
 
+For complete request and response documentation, use the interactive OpenAPI
+documentation available at:
+
+```text
+/docs
+```
 
 ## API Documentation
 
