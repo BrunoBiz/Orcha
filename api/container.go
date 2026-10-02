@@ -2,9 +2,10 @@ package api
 
 import (
 	"context"
-	"example/Orcha/logger"
 	"log/slog"
 	"strconv"
+
+	"github.com/BrunoBiz/Orcha/logger"
 )
 
 func (server *Server) getContainers(c context.Context, input *struct{}) (*ContainerOutput, error) {

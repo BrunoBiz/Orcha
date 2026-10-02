@@ -2,12 +2,13 @@ package api
 
 import (
 	"context"
-	"example/Orcha/logger"
-	"example/Orcha/proxmoxClient"
-	"example/Orcha/sshClient"
-	"example/Orcha/util"
 	"log/slog"
 	"net/http"
+
+	"github.com/BrunoBiz/Orcha/logger"
+	"github.com/BrunoBiz/Orcha/proxmoxClient"
+	"github.com/BrunoBiz/Orcha/sshClient"
+	"github.com/BrunoBiz/Orcha/util"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humagin"

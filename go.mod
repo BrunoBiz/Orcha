@@ -1,4 +1,4 @@
-module example/Orcha
+module github.com/BrunoBiz/Orcha
 
 go 1.26
 

@@ -3,11 +3,12 @@ package api
 import (
 	"context"
 	"errors"
-	"example/Orcha/logger"
 	"fmt"
 	"log/slog"
 	"strconv"
 	"strings"
+
+	"github.com/BrunoBiz/Orcha/logger"
 )
 
 func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*ServerResponse, error) {

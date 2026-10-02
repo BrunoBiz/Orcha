@@ -3,11 +3,12 @@ package api
 import (
 	"context"
 	"errors"
-	"example/Orcha/logger"
 	"fmt"
 	"log/slog"
 	"regexp"
 	"strconv"
+
+	"github.com/BrunoBiz/Orcha/logger"
 
 	"github.com/acarl005/stripansi"
 )

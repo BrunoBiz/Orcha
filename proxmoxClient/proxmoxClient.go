@@ -2,9 +2,10 @@ package proxmoxClient
 
 import (
 	"context"
-	"example/Orcha/util"
 	"fmt"
 	"time"
+
+	"github.com/BrunoBiz/Orcha/util"
 
 	"github.com/luthermonson/go-proxmox"
 )

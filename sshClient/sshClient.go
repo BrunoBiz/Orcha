@@ -1,9 +1,10 @@
 package sshClient
 
 import (
-	"example/Orcha/util"
 	"log/slog"
 	"os"
+
+	"github.com/BrunoBiz/Orcha/util"
 
 	"golang.org/x/crypto/ssh"
 )

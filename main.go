@@ -2,12 +2,13 @@ package main
 
 import (
 	"context"
-	"example/Orcha/api"
-	"example/Orcha/logger"
-	"example/Orcha/proxmoxClient"
-	"example/Orcha/sshClient"
-	"example/Orcha/util"
 	"log/slog"
+
+	"github.com/BrunoBiz/Orcha/api"
+	"github.com/BrunoBiz/Orcha/logger"
+	"github.com/BrunoBiz/Orcha/proxmoxClient"
+	"github.com/BrunoBiz/Orcha/sshClient"
+	"github.com/BrunoBiz/Orcha/util"
 )
 
 func main() {
