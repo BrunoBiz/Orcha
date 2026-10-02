@@ -1,4 +1,4 @@
-module example/Go-PM-API
+module example/Orcha
 
 go 1.26
 

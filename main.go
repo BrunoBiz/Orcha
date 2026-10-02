@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"example/Go-PM-API/api"
-	"example/Go-PM-API/logger"
-	"example/Go-PM-API/proxmoxClient"
-	"example/Go-PM-API/sshClient"
-	"example/Go-PM-API/util"
+	"example/Orcha/api"
+	"example/Orcha/logger"
+	"example/Orcha/proxmoxClient"
+	"example/Orcha/sshClient"
+	"example/Orcha/util"
 	"log/slog"
 )
 

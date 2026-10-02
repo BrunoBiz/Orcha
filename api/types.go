@@ -2,9 +2,9 @@ package api
 
 import (
 	"context"
-	"example/Go-PM-API/proxmoxClient"
-	"example/Go-PM-API/sshClient"
-	"example/Go-PM-API/util"
+	"example/Orcha/proxmoxClient"
+	"example/Orcha/sshClient"
+	"example/Orcha/util"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/gin-gonic/gin"

@@ -2,7 +2,7 @@ package api
 
 import (
 	"context"
-	"example/Go-PM-API/logger"
+	"example/Orcha/logger"
 	"log/slog"
 	"strconv"
 )
