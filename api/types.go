@@ -15,9 +15,6 @@ import (
 // API Request Body
 type ServerRequest struct {
 	CntID uint64 `path:"id" maxLength:"5" example:"101" doc:"Container VMID"`
-	Body  struct {
-		User string `json:"user" binding:"required" example:"gameserver" doc:"Linux user where the game is running from."`
-	}
 }
 
 // API response body
@@ -60,6 +57,6 @@ type Server struct {
 	humaAPI   huma.API
 }
 
-type ConteinerInput struct {
+type ContainerInput struct {
 	CntID uint64 `path:"id" maxLength:"5" example:"101" doc:"Container VMID"`
 }

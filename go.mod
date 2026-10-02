@@ -4,6 +4,7 @@ go 1.26
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+	github.com/danielgtaylor/huma/v2 v2.39.1
 	github.com/gin-gonic/gin v1.12.0
 	github.com/luthermonson/go-proxmox v0.8.0
 	github.com/samber/slog-gin v1.21.1
@@ -17,7 +18,6 @@ require (
 	github.com/bytedance/sonic v1.15.2 // indirect
 	github.com/bytedance/sonic/loader v0.5.1 // indirect
 	github.com/cloudwego/base64x v0.1.7 // indirect
-	github.com/danielgtaylor/huma/v2 v2.39.1 // indirect
 	github.com/diskfs/go-diskfs v1.9.3 // indirect
 	github.com/djherbis/times v1.6.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

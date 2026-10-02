@@ -19,13 +19,11 @@ func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*
 
 	// Parameter sent via URL
 	cntID = input.CntID
-	slog.Log(c, logger.LevelFile, "[postStartServer] - cntID: "+strconv.FormatUint(cntID, 10))
-	slog.Log(c, logger.LevelFile, "[postStartServer] - User: "+input.Body.User)
+	slog.Log(c, logger.LevelFile, "[postStopServer] - cntID: "+strconv.FormatUint(cntID, 10))
 
 	// Prepares the command to start the server
-	commandStop := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash %s -c 'cd ~ && ./Narwhal stop'"`,
-		cntID,
-		input.Body.User)
+	commandStop := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal stop'"`,
+		cntID)
 
 	// Sends the command via SSH, returns the combined output - stdout + stderr
 	optStopReturn, err := server.sshClient.NewSession(commandStop)
