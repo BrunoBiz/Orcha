@@ -20,12 +20,10 @@ func (server *Server) postRestartServer(c context.Context, input *ServerRequest)
 	// Parameter sent via URL
 	cntID = input.CntID
 	slog.Log(c, logger.LevelFile, "[postStartServer] - cntID: "+strconv.FormatUint(cntID, 10))
-	slog.Log(c, logger.LevelFile, "[postStartServer] - User: "+input.Body.User)
 
 	// Prepares the command to restart the server
-	commandRestart := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash %s -c 'cd ~ && ./Narwhal restart'"`,
-		cntID,
-		input.Body.User)
+	commandRestart := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal restart'"`,
+		cntID)
 	slog.Log(c, logger.LevelFile, "[postRestartServer] - commandDetails: "+commandRestart)
 
 	// Sends the command via SSH, returns the combined output - stdout + stderr

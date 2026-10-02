@@ -15,7 +15,7 @@ if ($LASTEXITCODE -ne 0) {
 scp .\Orcha root@[$deployIP]:/home/api/Orcha
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Copy failed - .\ProxmoxMgr_API"
+    Write-Host "Copy failed - .\Orcha"
     exit 1
 }
 

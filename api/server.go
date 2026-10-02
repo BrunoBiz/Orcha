@@ -182,7 +182,7 @@ func openApiSpecs(api huma.API) {
 	api.OpenAPI().Info = &info
 
 	var servers = huma.Server{
-		URL:         "http://192.168.18.162:8090",
+		URL:         "http://localhost:8090",
 		Description: "Local Proxmox container IP",
 	}
 	api.OpenAPI().Servers = append(api.OpenAPI().Servers, &servers)
