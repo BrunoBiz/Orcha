@@ -28,10 +28,10 @@ The API is designed to remain agnostic to how an individual game server is manag
 ## Architecture
 
 Orcha is composed mainly of:
-- A **Proxmox client** that wraps the PVE API to retrieve infrastructure information about the Proxmox environment;
-- An **SSH client** used to communicate with containers and manage game servers through the main Proxmox node;
-- A **web framework and router** responsible for handling API requests;
-- A **logging system** responsible for console and file logging, including custom log levels.
+- A **Proxmox client** that wraps the PVE API to retrieve infrastructure information about the Proxmox environment
+- An **SSH client** used to communicate with containers and manage game servers through the main Proxmox node
+- A **web framework and router** responsible for handling API requests
+- A **logging system** responsible for console and file logging, including custom log levels
 
 The API communicates with Proxmox for infrastructure information and uses SSH to access services running inside the LXC containers.
 
@@ -56,19 +56,28 @@ For game-server operations, the API delegates management to the configured game-
 ## Requirements
 
 -- TBD
+- Intended for Linux, tested on Debian 13
 
 ## Configuration
 
 The full list of environment variables, descriptions, and examples can be found here:
-- [configuration-reference](docs/configuration-reference.html)
+- [configuration-reference](docs/configuration-reference.md)
 
 ## Installation
 
 -- TBD
 
 ## Usage
+The API can be started by running the Orcha executable, below are a few examples of the API requests:
 
-[Basic startup instructions and example API requests.]
+### Check a containers' status
+`/containers/{id}/status`
+
+### Retrieve all containers
+`/containers`
+
+### Start a game server
+`/containers/server/{id}/start`
 
 ## API Documentation
 
@@ -100,13 +109,14 @@ The current version targets Proxmox LXC environments and supports game-server ma
 
 ## Known Limitations
 
-- The SSH client is currently connecting to the root user;
-- Manual and laborious first-time installation;
-- LinuxGSM needs a small bash wrapper for the API to remain agnostic;
-- Containerization and AWS deployment are planned ;
-- A web frontend is planned;
-- Authentication is not yet implemented;
+- The SSH client is currently connecting to the root user
+- Manual and laborious first-time installation
+- LinuxGSM needs a small bash wrapper for the API to remain agnostic
+- Game server management currently requires the Linux user under which the game server is installed to be provided as a request parameter
+- Containerization and AWS deployment are planned
+- A web frontend is planned
+- Authentication is not yet implemented
 
 ## License
 
---
+MIT
