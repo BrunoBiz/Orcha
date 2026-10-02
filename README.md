@@ -130,7 +130,6 @@ The current version targets Proxmox LXC environments and supports game-server ma
 - The SSH client is currently connecting to the root user
 - Manual and laborious first-time installation
 - LinuxGSM needs a small bash wrapper for the API to remain agnostic
-- Game server management currently requires the Linux user under which the game server is installed to be provided as a request parameter
 - Containerization and AWS deployment are planned
 - A web frontend is planned
 - Authentication is not yet implemented
