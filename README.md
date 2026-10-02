@@ -55,8 +55,24 @@ For game-server operations, the API delegates management to the configured game-
 
 ## Requirements
 
--- TBD
-- Intended for Linux, tested on Debian 13
+### Game Server Requirements
+
+For game-server management, Orcha expects each managed LXC container to have a
+dedicated Linux user named `gameserver`.
+
+The game-server manager must be available from the `gameserver` user's home
+directory and expose the following operations:
+
+- `start`
+- `stop`
+- `restart`
+- `details`
+
+[Narwhal](https://github.com/BrunoBiz/Narwhal) implements this interface
+directly.
+
+LinuxGSM is also supported through a small compatibility wrapper that forwards
+these operations to the appropriate LinuxGSM server script.
 
 ## Configuration
 
