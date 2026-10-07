@@ -143,6 +143,7 @@ The current version targets Proxmox LXC environments and supports game-server ma
 - Containerization and AWS deployment are planned
 - A web frontend is planned
 - Authentication is not yet implemented
+- SSH host-key verification is currently disabled; the Proxmox SSH connection uses `ssh.InsecureIgnoreHostKey()` and is intended for use within a trusted environment.
 
 ## License
 
