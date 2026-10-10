@@ -55,24 +55,77 @@ For game-server operations, the API delegates management to the configured game-
 
 ## Requirements
 
+### Orcha Host
+
+Orcha is intended to run on Linux and is currently developed and tested on
+Debian 13.
+
+To build and run Orcha from source, the host requires:
+
+- Go 1.26 or newer
+- Git
+- Network access to the Proxmox VE API
+- SSH access to the Proxmox node
+- A Proxmox VE API token
+- An SSH private key for connecting to the Proxmox node
+- A `pm.env` configuration file
+
+Orcha currently connects to a single configured Proxmox node.
+
+The configuration file must be named:
+
+```text
+pm.env
+```
+
+and should be located in the directory from which Orcha is started.
+
+See
+[`docs/configuration-reference.md`](docs/configuration-reference.md)
+for the complete list of configuration variables.
+
 ### Game Server Requirements
 
-For game-server management, Orcha expects each managed LXC container to have a
-dedicated Linux user named `gameserver`.
+For game-server management, each managed LXC container must have a dedicated
+Linux user named:
 
-The game-server manager must be available from the `gameserver` user's home
-directory and expose the following operations:
+```text
+gameserver
+```
 
-- `start`
-- `stop`
-- `restart`
-- `details`
+Orcha expects the game-server manager entry point to be available as:
+
+```text
+/home/gameserver/Narwhal
+```
+
+The manager must support the following operations:
+
+```text
+./Narwhal start
+./Narwhal stop
+./Narwhal restart
+./Narwhal details
+```
 
 [Narwhal](https://github.com/BrunoBiz/Narwhal) implements this interface
 directly.
 
-LinuxGSM is also supported through a small compatibility wrapper that forwards
-these operations to the appropriate LinuxGSM server script.
+LinuxGSM can also be used through a compatibility wrapper named `Narwhal`
+placed in `/home/gameserver`. The wrapper forwards the lifecycle operation to
+the appropriate LinuxGSM server script.
+
+For example:
+
+```bash
+#!/bin/bash
+
+echo "Using LinuxGSM - Wrapper"
+
+exec ./gmodserver "$@"
+```
+
+The LinuxGSM installation and its wrapper must run under the `gameserver` user.
 
 ## Configuration
 
@@ -81,7 +134,106 @@ The full list of environment variables, descriptions, and examples can be found 
 
 ## Installation
 
--- TBD
+### 1. Install Git and Go
+
+Install Git using your distribution's package manager.
+
+For Debian-based systems:
+
+```bash
+sudo apt update
+sudo apt install -y git
+```
+
+Verify that Go 1.26 or newer is installed:
+
+```bash
+go version
+```
+
+### 2. Clone the Repository
+
+```bash
+git clone https://github.com/BrunoBiz/Orcha.git
+cd Orcha
+```
+
+### 3. Download Dependencies
+
+```bash
+go mod download
+```
+
+### 4. Build Orcha
+
+```bash
+go build -o Orcha
+```
+
+This creates the Orcha executable in the project directory:
+
+```text
+./Orcha
+```
+
+### 5. Configure Orcha
+
+Create a file named:
+
+```text
+pm.env
+```
+
+in the project directory.
+
+Example:
+
+```env
+PVE_URL=https://192.168.1.10:8006/api2/json
+PVE_USER=Orcha
+PVE_REALM=pve
+PVE_USER_REALM=Orcha@pve
+PVE_TOKEN_ID=api-token
+PVE_TOKEN=your-proxmox-api-token
+PVE_NODE_NAME=main
+SSH_KEY_FILE=/path/to/private/key
+SSH_KEY_PASSPHRASE=your-key-passphrase
+SSH_PVE_IP=192.168.1.10
+SSH_PVE_PORT=22
+```
+
+See
+[`docs/configuration-reference.md`](docs/configuration-reference.md)
+for a complete description of each variable.
+
+### 6. Start Orcha
+
+Run Orcha from the directory containing `pm.env`:
+
+```bash
+./Orcha
+```
+
+By default, the API listens on:
+
+```text
+http://localhost:8090
+```
+
+Interactive OpenAPI documentation is available at:
+
+```text
+http://localhost:8090/docs
+```
+
+The OpenAPI specification is also available at:
+
+```text
+/openapi.json
+/openapi-3.0.json
+/openapi.yaml
+/openapi-3.0.yaml
+```
 
 ## Usage
 
