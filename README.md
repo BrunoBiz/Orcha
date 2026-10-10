@@ -127,6 +127,21 @@ exec ./gmodserver "$@"
 
 The LinuxGSM installation and its wrapper must run under the `gameserver` user.
 
+### Manager Compatibility
+
+Orcha determines the result of lifecycle operations from the output produced by
+the configured manager.
+
+A compatible manager or wrapper must therefore:
+
+- Be executable by the `gameserver` user
+- Support `start`, `stop`, `restart`, and `details`
+- Produce lifecycle output in a format recognized by Orcha
+
+Narwhal implements this behavior directly. LinuxGSM is supported through the
+compatibility wrapper shown above, allowing its existing command output to be
+interpreted by Orcha without adding LinuxGSM-specific execution logic to the API.
+
 ## Configuration
 
 The full list of environment variables, descriptions, and examples can be found here:
