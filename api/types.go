@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"math"
 
 	"github.com/BrunoBiz/Orcha/proxmoxClient"
 	"github.com/BrunoBiz/Orcha/sshClient"
@@ -30,7 +31,7 @@ type ServerResponse struct {
 // Container info from the proxmox package, formatted to be used with HUMA
 type ContainerInfo struct {
 	CPUs    int                    `json:"cpus"`
-	MaxDisk uint64                 `json:"maxdisk"`
+	MaxDisk float64                `json:"maxdisk"`
 	MaxMem  uint64                 `json:"maxmem"`
 	MaxSwap uint64                 `json:"maxswap"`
 	Name    string                 `json:"name"`
@@ -59,4 +60,8 @@ type Server struct {
 
 type ContainerInput struct {
 	CntID uint64 `path:"id" maxLength:"5" example:"101" doc:"Container VMID"`
+}
+
+func Truncate(value float64) float64 {
+	return math.Trunc(value*100) / 100
 }

@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"log/slog"
+	"math"
 	"strconv"
 
 	"github.com/BrunoBiz/Orcha/logger"
@@ -25,9 +26,9 @@ func (server *Server) getContainers(c context.Context, input *struct{}) (*Contai
 
 	for _, ctnRange := range ctnList {
 		containerInfo.CPUs = ctnRange.CPUs
-		containerInfo.MaxDisk = ctnRange.MaxDisk
-		containerInfo.MaxMem = ctnRange.MaxMem
-		containerInfo.MaxSwap = ctnRange.MaxSwap
+		containerInfo.MaxDisk = Truncate(float64(ctnRange.MaxDisk) / math.Pow(1024, 3)) // Disk usage converted to a readable format
+		containerInfo.MaxMem = ctnRange.MaxMem / 1048576                                // Max memory converted to a readable format - Converted to MB (from bytes)
+		containerInfo.MaxSwap = ctnRange.MaxSwap / 1048576                              // Max memory swap converted to a readable format - Converted to MB (from bytes)
 		containerInfo.Name = ctnRange.Name
 		containerInfo.Node = ctnRange.Node
 		containerInfo.Status = ctnRange.Status
@@ -67,9 +68,9 @@ func (server *Server) getContainerById(c context.Context, input *ContainerInput)
 		if uint64(ctnList[i].VMID) == cntID {
 			slog.Log(c, logger.LevelFile, "[getContainerById] - Container found")
 			containerInfo.CPUs = ctnList[i].CPUs
-			containerInfo.MaxDisk = ctnList[i].MaxDisk
-			containerInfo.MaxMem = ctnList[i].MaxMem
-			containerInfo.MaxSwap = ctnList[i].MaxSwap
+			containerInfo.MaxDisk = Truncate(float64(ctnList[i].MaxDisk) / math.Pow(1024, 3)) // Disk usage converted to a readable format
+			containerInfo.MaxMem = ctnList[i].MaxMem / 1048576                                // Max memory converted to a readable format - Converted to MB (from bytes)
+			containerInfo.MaxSwap = ctnList[i].MaxSwap / 1048576                              // Max memory swap converted to a readable format - Converted to MB (from bytes)
 			containerInfo.Name = ctnList[i].Name
 			containerInfo.Node = ctnList[i].Node
 			containerInfo.Status = ctnList[i].Status
