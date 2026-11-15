@@ -65,9 +65,9 @@ To build and run Orcha from source, the host requires:
 - Go 1.26 or newer
 - Git
 - Network access to the Proxmox VE API
-- SSH access to the Proxmox node
+- SSH public-key authentication to the Proxmox node as `root`, configured before starting Orcha
 - A Proxmox VE API token
-- An SSH private key for connecting to the Proxmox node
+- A passphrase-protected SSH private key readable by the Linux user running Orcha, with its matching public key installed in `/root/.ssh/authorized_keys` on the Proxmox node
 - A `pm.env` configuration file
 
 Orcha currently connects to a single configured Proxmox node.
@@ -221,7 +221,42 @@ See
 [`docs/configuration-reference.md`](docs/configuration-reference.md)
 for a complete description of each variable.
 
-### 6. Start Orcha
+### 6. Set Up SSH Public-Key Authentication
+
+Before starting Orcha, install the public key matching `SSH_KEY_FILE` on the
+Proxmox node for the `root` user. Run the following from the host running
+Orcha, replacing the example key path, SSH port, and node address with your
+configured values:
+
+```bash
+ssh-copy-id -i /path/to/private/key.pub -p 22 root@192.168.1.10
+```
+
+`ssh-copy-id` installs the **public key** in the remote user's
+`authorized_keys` file. Keep the private key on the Orcha host and set
+`SSH_KEY_FILE` to its path. The current SSH client expects a
+passphrase-protected private key; set `SSH_KEY_PASSPHRASE` to that key's
+passphrase.
+
+If the matching public key is already installed for `root`, this setup step
+does not need to be repeated. Installing it manually or through another
+provisioning tool is also supported.
+
+Verify key authentication from the Orcha host, as the Linux user that will run
+Orcha:
+
+```bash
+ssh -i /path/to/private/key -p 22 -o IdentitiesOnly=yes -o PreferredAuthentications=publickey root@192.168.1.10 'whoami'
+```
+
+The command should print `root`. A prompt for the local private key's passphrase
+is expected when the key is encrypted.
+
+Orcha currently authenticates to the Proxmox node as `root` using the configured
+private key and establishes this SSH connection during startup. If key
+authentication fails, the API will not start.
+
+### 7. Start Orcha
 
 Run Orcha from the directory containing `pm.env`:
 
