@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/BrunoBiz/Orcha/logger"
+	"github.com/danielgtaylor/huma/v2"
 )
 
 func (server *Server) getContainers(c context.Context, input *struct{}) (*ContainerOutput, error) {
@@ -20,8 +21,8 @@ func (server *Server) getContainers(c context.Context, input *struct{}) (*Contai
 	slog.Log(c, logger.LevelFile, "[getContainers] - ctnList: "+strconv.Itoa(len(ctnList)))
 
 	if err != nil {
-		slog.Log(c, logger.LevelFile, "[getContainers] - ERROR: "+err.Error())
-		return nil, err
+		addRequestFields(c, "error_code", "PROXMOX_API_FAILED", "error", err.Error())
+		return nil, huma.Error500InternalServerError("Unable to query Proxmox. Request ID: " + requestID(c))
 	}
 
 	for _, ctnRange := range ctnList {
@@ -59,8 +60,8 @@ func (server *Server) getContainerById(c context.Context, input *ContainerInput)
 	slog.Log(c, logger.LevelFile, "[getContainerById] - ctnList: "+strconv.Itoa(len(ctnList)))
 
 	if err != nil {
-		slog.Log(c, logger.LevelFile, "[getContainerById] - ERROR: "+err.Error())
-		return nil, err
+		addRequestFields(c, "error_code", "PROXMOX_API_FAILED", "error", err.Error())
+		return nil, huma.Error500InternalServerError("Unable to query Proxmox. Request ID: " + requestID(c))
 	}
 
 	// Looks for the container
@@ -101,9 +102,9 @@ func (server *Server) getContainerStatusById(c context.Context, input *Container
 	slog.Log(c, logger.LevelFile, "[getContainerStatusById] - ctnList: "+strconv.Itoa(len(ctnList)))
 
 	if err != nil {
-		slog.Log(c, logger.LevelFile, "[getContainerStatusById] - ERROR: "+err.Error())
+		addRequestFields(c, "error_code", "PROXMOX_API_FAILED", "error", err.Error())
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
-		return &serverResponse, err
+		return nil, huma.Error500InternalServerError("Unable to query Proxmox. Request ID: " + requestID(c))
 	}
 
 	// Looks for the container

@@ -5,7 +5,6 @@ import (
 	"math"
 
 	"github.com/BrunoBiz/Orcha/proxmoxClient"
-	"github.com/BrunoBiz/Orcha/sshClient"
 	"github.com/BrunoBiz/Orcha/util"
 
 	"github.com/danielgtaylor/huma/v2"
@@ -54,7 +53,7 @@ type Server struct {
 	ctx       context.Context
 	router    *gin.Engine
 	pmClient  *proxmoxClient.ProxmoxClient
-	sshClient *sshClient.SshClient
+	sshClient interface{ NewSession(string) (string, error) }
 	humaAPI   huma.API
 }
 

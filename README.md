@@ -328,6 +328,17 @@ Interactive API documentation is available through:
 `/docs`
 
 
+## Logging and diagnostics
+
+Orcha logs one concise summary per HTTP request. Failed game-server operations
+include the VMID, action, command, exit code (when available), and captured
+stdout/stderr. Each response includes a request ID to match errors shown in
+Orcha Web to the corresponding server log entry.
+
+Logs default to `info`; set the process environment variable `LOG_LEVEL=debug`
+for internal diagnostic steps, or `LOG_LEVEL=warn` to suppress successful polls.
+See [logging and diagnostics](docs/logging.md) for examples and live log viewing.
+
 ## Deployment
 
 Orcha is currently deployed to my self-hosted Proxmox environment using an automated Go build and SSH-based deployment workflow.

@@ -5,34 +5,24 @@ import (
 	"log/slog"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 )
 
-/*
-	Slog log levels
-
-	File   -> Log levels -3 and above
-	Stdout -> Log levels 0 and above
-
-	const (
-		LevelDebug Level = -4
-		LevelGIN   Level = -3 --> Custom - All GIN middleware SLOG
-		LevelFile  Level = -2 --> Custom - Any logs that need to be logged to the file, but not STDOUT
-		LevelInfo  Level = 0
-		LevelWarn  Level = 4
-		LevelError Level = 8
-	)
-*/
-
+// Legacy diagnostic levels remain available to callers; both destinations now
+// use LOG_LEVEL (info by default), rather than always writing verbose file logs.
 const (
 	LevelGIN  = slog.Level(-3)
 	LevelFile = slog.Level(-2)
 )
 
 func LoadLogger() error {
-
+	level, err := logLevel(os.Getenv("LOG_LEVEL"))
+	if err != nil {
+		return err
+	}
 	//The 'Log' folder will always be in the root directory of Orcha
-	err := checkDirectory()
+	err = checkDirectory()
 	if err != nil {
 		return err
 	}
@@ -52,23 +42,9 @@ func LoadLogger() error {
 		return err
 	}
 
-	// Removes the time and level information -> STDOUT
-	replaceWithoutTimeLevel := func(groups []string, a slog.Attr) slog.Attr {
-		if (a.Key == slog.TimeKey && len(groups) == 0) ||
-			(a.Key == slog.LevelKey && len(groups) == 0) {
-			return slog.Attr{}
-		}
-
-		if a.Key == slog.MessageKey && len(groups) == 0 {
-			return slog.Attr{Key: "", Value: a.Value} // TODO - Still prints the "" in the stdout
-		}
-
-		return a
-	}
-
 	multiHandler := slog.NewMultiHandler(
-		slog.NewTextHandler(logFile, &slog.HandlerOptions{AddSource: true, Level: LevelGIN}),                              // Logs to the log file, has added source
-		slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{ReplaceAttr: replaceWithoutTimeLevel, Level: slog.LevelInfo}), // Logs to the stdout, does not print the current time and log level
+		slog.NewTextHandler(logFile, &slog.HandlerOptions{AddSource: level <= slog.LevelDebug, Level: level}),
+		slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level}),
 	)
 	slog.SetDefault(slog.New(multiHandler))
 
@@ -115,4 +91,20 @@ func logRotation() error {
 	}
 
 	return nil
+}
+
+// LOG_LEVEL controls both destinations; verbose internal steps are opt-in.
+func logLevel(value string) (slog.Level, error) {
+	switch strings.ToLower(strings.TrimSpace(value)) {
+	case "", "info":
+		return slog.LevelInfo, nil
+	case "debug":
+		return slog.LevelDebug, nil
+	case "warn":
+		return slog.LevelWarn, nil
+	case "error":
+		return slog.LevelError, nil
+	default:
+		return 0, fmt.Errorf("invalid LOG_LEVEL %q: use debug, info, warn or error", value)
+	}
 }
