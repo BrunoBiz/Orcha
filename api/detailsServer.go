@@ -47,7 +47,7 @@ func (server *Server) postDetailsServer(c context.Context, input *ServerRequest)
 	// Server OFFLINE
 	if regexp.MustCompile(`(?mi)(status:)\s+(stopped)`).MatchString(stripansi.Strip(optDetailsReturn)) {
 		slog.Log(c, logger.LevelFile, "[postDetailsServer] - Server stopped")
-		serverResponse = NewSuccessfulResponse(true, "Server stopped")
+		serverResponse = NewSuccessfulResponse(false, "Server stopped")
 		return &serverResponse, nil
 	}
 
