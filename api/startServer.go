@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/BrunoBiz/Orcha/logger"
+	"github.com/acarl005/stripansi"
 )
 
 func (server *Server) postStartServer(c context.Context, input *ServerRequest) (*ServerResponse, error) {
@@ -33,6 +34,8 @@ func (server *Server) postStartServer(c context.Context, input *ServerRequest) (
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
 		return &serverResponse, operationFailure(c, cntID, "start", optStartReturn, err)
 	}
+
+	optStartReturn = stripansi.Strip(optStartReturn)
 
 	// Started
 	if strings.Contains(optStartReturn, "[  OK  ] Starting") || strings.Contains(optStartReturn, "MESSAGE: Server started") {
