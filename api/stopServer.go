@@ -5,18 +5,21 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"strconv"
 	"strings"
 
 	"github.com/BrunoBiz/Orcha/logger"
 )
 
 func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*ServerResponse, error) {
+	slog.Log(c, logger.LevelFile, "[postStopServer] - API CALL")
 
 	var cntID uint64
 	var serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
 
 	// Parameter sent via URL
 	cntID = input.CntID
+	slog.Log(c, logger.LevelFile, "[postStopServer] - cntID: "+strconv.FormatUint(cntID, 10))
 
 	// Prepares the command to start the server
 	commandStop := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal stop'"`,
@@ -24,6 +27,7 @@ func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*
 
 	// Sends the command via SSH, returns the combined output - stdout + stderr
 	optStopReturn, err := server.sshClient.NewSession(commandStop)
+	slog.Log(c, logger.LevelFile, "[postStopServer] - commandDetails: "+optStopReturn)
 
 	if err != nil {
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
@@ -45,5 +49,6 @@ func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*
 	}
 
 	// Error - If can't stop server, returns an error
+	slog.Log(c, logger.LevelFile, "[postStopServer] - OK")
 	return &serverResponse, operationFailure(c, cntID, "stop", optStopReturn, errors.New("Unable to stop server"))
 }

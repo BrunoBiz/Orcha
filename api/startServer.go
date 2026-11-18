@@ -5,22 +5,26 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"strconv"
 	"strings"
 
 	"github.com/BrunoBiz/Orcha/logger"
 )
 
 func (server *Server) postStartServer(c context.Context, input *ServerRequest) (*ServerResponse, error) {
+	slog.Log(c, logger.LevelFile, "[postStartServer] - API CALL")
 
 	var cntID uint64
 	var serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
 
 	// Parameter sent via URL
 	cntID = input.CntID
+	slog.Log(c, logger.LevelFile, "[postStartServer] - cntID: "+strconv.FormatUint(cntID, 10))
 
 	// Prepares the command to start the server
 	commandStart := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal start'"`,
 		cntID)
+	slog.Log(c, logger.LevelFile, "[postStartServer] - commandDetails: "+commandStart)
 
 	// Sends the command via SSH, returns the combined output - stdout + stderr
 	optStartReturn, err := server.sshClient.NewSession(commandStart)
