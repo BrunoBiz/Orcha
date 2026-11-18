@@ -328,6 +328,14 @@ Interactive API documentation is available through:
 `/docs`
 
 
+## Logging
+
+Orcha logs to the console and to files using its existing custom log levels.
+Failed game-server operations include the container VMID, action, original error,
+and captured stdout/stderr from the command executed inside the LXC container.
+This helps diagnose LXC and Narwhal errors without rerunning the command manually
+on the Proxmox node. HTTP request/response header and body dumps are disabled.
+
 ## Deployment
 
 Orcha is currently deployed to my self-hosted Proxmox environment using an automated Go build and SSH-based deployment workflow.
@@ -343,7 +351,7 @@ The current version targets Proxmox LXC environments and supports game-server ma
 - Manual and laborious first-time installation
 - LinuxGSM needs a small bash wrapper for the API to remain agnostic
 - Containerization and AWS deployment are planned
-- A web frontend is planned
+- A web frontend is under development: [Orcha Web](https://github.com/BrunoBiz/orcha-web)
 - Authentication is not yet implemented
 - SSH host-key verification is currently disabled; the Proxmox SSH connection uses `ssh.InsecureIgnoreHostKey()` and is intended for use within a trusted environment.
 
