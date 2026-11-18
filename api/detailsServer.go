@@ -32,9 +32,8 @@ func (server *Server) postDetailsServer(c context.Context, input *ServerRequest)
 	optDetailsReturn, err := server.sshClient.NewSession(commandDetails)
 
 	if err != nil {
-		slog.Error("[postDetailsServer] - SSH New Session: " + err.Error())
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
-		return &serverResponse, err
+		return &serverResponse, operationFailure(c, cntID, "details", optDetailsReturn, err)
 	}
 
 	// Server ONLINE
@@ -47,11 +46,11 @@ func (server *Server) postDetailsServer(c context.Context, input *ServerRequest)
 	// Server OFFLINE
 	if regexp.MustCompile(`(?mi)(status:)\s+(stopped)`).MatchString(stripansi.Strip(optDetailsReturn)) {
 		slog.Log(c, logger.LevelFile, "[postDetailsServer] - Server stopped")
-		serverResponse = NewSuccessfulResponse(true, "Server stopped")
+		serverResponse = NewSuccessfulResponse(false, "Server stopped")
 		return &serverResponse, nil
 	}
 
 	// Error - If can't check server details, returns an error
 	slog.Log(c, logger.LevelFile, "[postDetailsServer] - OK")
-	return &serverResponse, errors.New("Unable to check server details")
+	return &serverResponse, operationFailure(c, cntID, "details", optDetailsReturn, errors.New("Unable to check server details"))
 }

@@ -30,9 +30,8 @@ func (server *Server) postRestartServer(c context.Context, input *ServerRequest)
 	optRestartReturn, err := server.sshClient.NewSession(commandRestart)
 
 	if err != nil {
-		slog.Error("SSH New Session: " + err.Error())
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
-		return &serverResponse, err
+		return &serverResponse, operationFailure(c, cntID, "restart", optRestartReturn, err)
 	}
 
 	// Started
@@ -51,5 +50,5 @@ func (server *Server) postRestartServer(c context.Context, input *ServerRequest)
 
 	// Error - If can't restart server, returns an error
 	slog.Log(c, logger.LevelFile, "[postRestartServer] - OK")
-	return &serverResponse, errors.New("Unable to restart server")
+	return &serverResponse, operationFailure(c, cntID, "restart", optRestartReturn, errors.New("Unable to restart server"))
 }

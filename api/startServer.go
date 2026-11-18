@@ -30,9 +30,8 @@ func (server *Server) postStartServer(c context.Context, input *ServerRequest) (
 	optStartReturn, err := server.sshClient.NewSession(commandStart)
 
 	if err != nil {
-		slog.Error("[postStartServer] - SSH New Session: " + err.Error())
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
-		return &serverResponse, err
+		return &serverResponse, operationFailure(c, cntID, "start", optStartReturn, err)
 	}
 
 	// Started
@@ -50,5 +49,5 @@ func (server *Server) postStartServer(c context.Context, input *ServerRequest) (
 	}
 
 	// Error - If can't start server, returns an error
-	return &serverResponse, errors.New("Unable to start server")
+	return &serverResponse, operationFailure(c, cntID, "start", optStartReturn, errors.New("Unable to start server"))
 }

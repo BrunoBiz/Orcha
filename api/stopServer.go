@@ -30,9 +30,8 @@ func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*
 	slog.Log(c, logger.LevelFile, "[postStopServer] - commandDetails: "+optStopReturn)
 
 	if err != nil {
-		slog.Error("[postStopServer] - SSH New Session: " + err.Error())
 		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
-		return &serverResponse, err
+		return &serverResponse, operationFailure(c, cntID, "stop", optStopReturn, err)
 	}
 
 	// Server stopped
@@ -51,5 +50,5 @@ func (server *Server) postStopServer(c context.Context, input *ServerRequest) (*
 
 	// Error - If can't stop server, returns an error
 	slog.Log(c, logger.LevelFile, "[postStopServer] - OK")
-	return &serverResponse, errors.New("Unable to stop server")
+	return &serverResponse, operationFailure(c, cntID, "stop", optStopReturn, errors.New("Unable to stop server"))
 }
