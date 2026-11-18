@@ -1,6 +1,7 @@
 package sshClient
 
 import (
+	"log/slog"
 	"os"
 
 	"github.com/BrunoBiz/Orcha/util"
@@ -49,6 +50,7 @@ func NewSshClient(config util.Config) (*SshClient, error) {
 func (ssh *SshClient) NewSession(context string) (string, error) {
 	session, err := ssh.sshClient.NewSession()
 	if err != nil {
+		slog.Error("SSH - Failed to create session: " + err.Error())
 		return "", err
 	}
 

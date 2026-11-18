@@ -1,7 +1,49 @@
 package api
 
-import "context"
+import (
+	"context"
+	"errors"
+	"fmt"
+	"log/slog"
+	"strings"
 
-func (server *Server) postStartServer(ctx context.Context, input *ServerRequest) (*ServerResponse, error) {
-	return server.runServerOperation(ctx, input, "start")
+	"github.com/BrunoBiz/Orcha/logger"
+)
+
+func (server *Server) postStartServer(c context.Context, input *ServerRequest) (*ServerResponse, error) {
+
+	var cntID uint64
+	var serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
+
+	// Parameter sent via URL
+	cntID = input.CntID
+
+	// Prepares the command to start the server
+	commandStart := fmt.Sprintf(`pct exec %d -- bash -c "su -s /bin/bash gameserver -c 'cd ~ && ./Narwhal start'"`,
+		cntID)
+
+	// Sends the command via SSH, returns the combined output - stdout + stderr
+	optStartReturn, err := server.sshClient.NewSession(commandStart)
+
+	if err != nil {
+		serverResponse = NewErrorResponse("An error occurred while processing the request.", "INTERNAL_SERVER_ERROR")
+		return &serverResponse, operationFailure(c, cntID, "start", optStartReturn, err)
+	}
+
+	// Started
+	if strings.Contains(optStartReturn, "[  OK  ] Starting") || strings.Contains(optStartReturn, "MESSAGE: Server started") {
+		slog.Log(c, logger.LevelFile, "[postStartServer] - Server started successfully")
+		serverResponse = NewSuccessfulResponse(true, "Server started successfully.")
+		return &serverResponse, nil
+	}
+
+	// Already running
+	if strings.Contains(optStartReturn, "is already running") {
+		slog.Log(c, logger.LevelFile, "[postStartServer] - Server is already running")
+		serverResponse = NewSuccessfulResponse(false, "Server is already running.")
+		return &serverResponse, nil
+	}
+
+	// Error - If can't start server, returns an error
+	return &serverResponse, operationFailure(c, cntID, "start", optStartReturn, errors.New("Unable to start server"))
 }

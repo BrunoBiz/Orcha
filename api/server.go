@@ -2,9 +2,10 @@ package api
 
 import (
 	"context"
+	"log/slog"
 	"net/http"
-	"os"
 
+	"github.com/BrunoBiz/Orcha/logger"
 	"github.com/BrunoBiz/Orcha/proxmoxClient"
 	"github.com/BrunoBiz/Orcha/sshClient"
 	"github.com/BrunoBiz/Orcha/util"
@@ -12,6 +13,7 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humagin"
 	"github.com/gin-gonic/gin"
+	sloggin "github.com/samber/slog-gin"
 )
 
 func NewServer(config util.Config, ctx context.Context, proxmoxClient *proxmoxClient.ProxmoxClient, sshClient *sshClient.SshClient) (*Server, error) {
@@ -28,11 +30,31 @@ func NewServer(config util.Config, ctx context.Context, proxmoxClient *proxmoxCl
 }
 
 func (server *Server) setupRouter() {
-	if os.Getenv("GIN_MODE") == "" {
-		gin.SetMode(gin.ReleaseMode)
+	router := gin.Default()
+	defaultLogger := slog.Default()
+
+	configSlogGin := sloggin.Config{
+		DefaultLevel: logger.LevelGIN,
+		//ClientErrorLevel: slog.LevelWarn,
+		//ServerErrorLevel: slog.LevelError,
+
+		WithUserAgent:      false,
+		WithRequestID:      true,
+		WithRequestBody:    false,
+		WithRequestHeader:  false,
+		WithResponseBody:   false,
+		WithResponseHeader: false,
+		WithSpanID:         false,
+		WithTraceID:        false,
+		WithClientIP:       false,
+
+		WithCustomMessage: func(c *gin.Context) string {
+			return "GIN-Log"
+		},
 	}
-	router := gin.New()
-	router.Use(requestLogging(), gin.Recovery())
+
+	// Sets up the slog middleware for GIN
+	router.Use(sloggin.NewWithConfig(defaultLogger, configSlogGin))
 
 	// Sets up HUMA
 	humaApi := humagin.New(router, huma.DefaultConfig("Orcha - Proxmox Orchestration API", "1.0.0"))
